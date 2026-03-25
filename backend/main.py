@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api.v1 import assets, signals, congress, portfolio
+from backend.api.v1 import assets, signals, congress, portfolio, backfill
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +34,7 @@ app.include_router(assets.router, prefix="/api/v1", tags=["assets"])
 app.include_router(signals.router, prefix="/api/v1", tags=["signals"])
 app.include_router(congress.router, prefix="/api/v1", tags=["congress"])
 app.include_router(portfolio.router, prefix="/api/v1", tags=["portfolio"])
+app.include_router(backfill.router, prefix="/api/v1", tags=["backfill"])
 
 
 @app.get("/health")
