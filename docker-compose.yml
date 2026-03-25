@@ -160,7 +160,7 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    command: python -m flink.producers.price_producer
+    command: python -m backend.producers.price_producer
     depends_on:
       - kafka
     networks:
@@ -174,7 +174,7 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    command: python -m flink.producers.news_producer
+    command: python -m backend.producers.news_producer
     depends_on:
       - kafka
     networks:
