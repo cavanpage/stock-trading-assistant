@@ -25,6 +25,12 @@ class Settings(BaseSettings):
     reddit_client_secret: str = ""
     reddit_user_agent: str = "stock-trading-assistant/0.1"
 
+    # Polygon.io
+    polygon_api_key: str = ""
+
+    # Alpha Vantage
+    alpha_vantage_api_key: str = ""
+
     # NewsAPI
     newsapi_key: str = ""
 
