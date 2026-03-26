@@ -86,3 +86,25 @@ def ingest_newsdata(self):
         return count
     except Exception as exc:
         raise self.retry(exc=exc, countdown=180)
+
+
+@celery_app.task(name="backend.tasks.ingestion_tasks.ingest_sec_edgar", bind=True, max_retries=2)
+def ingest_sec_edgar(self):
+    from backend.ingestion.sec_edgar import SECEdgarIngester
+    try:
+        count = _run(SECEdgarIngester().ingest())
+        logger.info(f"SEC EDGAR ingestion complete: {count} records")
+        return count
+    except Exception as exc:
+        raise self.retry(exc=exc, countdown=300)
+
+
+@celery_app.task(name="backend.tasks.ingestion_tasks.ingest_earnings_transcripts", bind=True, max_retries=2)
+def ingest_earnings_transcripts(self):
+    from backend.ingestion.earnings_transcript import EarningsTranscriptIngester
+    try:
+        count = _run(EarningsTranscriptIngester().ingest())
+        logger.info(f"Earnings transcript ingestion complete: {count} transcripts")
+        return count
+    except Exception as exc:
+        raise self.retry(exc=exc, countdown=300)

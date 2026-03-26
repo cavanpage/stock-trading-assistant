@@ -58,4 +58,14 @@ celery_app.conf.beat_schedule = {
         "task": "backend.tasks.ml_tasks.run_daily_sentiment",
         "schedule": crontab(hour=9, minute=0),
     },
+    # SEC EDGAR Form 4 — daily at 6 AM (filings land overnight)
+    "ingest-sec-edgar-daily": {
+        "task": "backend.tasks.ingestion_tasks.ingest_sec_edgar",
+        "schedule": crontab(hour=6, minute=0),
+    },
+    # Earnings transcripts — every 6 hours to catch calls throughout the day
+    "ingest-earnings-transcripts-every-6hr": {
+        "task": "backend.tasks.ingestion_tasks.ingest_earnings_transcripts",
+        "schedule": crontab(hour="*/6", minute=30),
+    },
 }
